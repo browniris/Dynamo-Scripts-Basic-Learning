@@ -1,0 +1,200 @@
+<Workspace Version="1.2.1.3083" X="102.242512652493" Y="303.253826172882" zoom="0.557170616883034" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="List.Count" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="List" resolvedName="DSCore.List" assemblyName="DSCoreNodes.dll" />
+    <ClassMap partialName="Autodesk.Curve" resolvedName="Autodesk.DesignScript.Geometry.Curve" assemblyName="ProtoGeometry.dll" />
+    <ClassMap partialName="SketchPlane" resolvedName="Revit.Elements.SketchPlane" assemblyName="RevitNodes.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="e28cef50-3661-4861-a400-c1d2dff7581d" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Documet.Get Linked Model (with Instance and Doc)" x="-256.788773097298" y="54.0496527387342" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <ID value="50351195-28f4-4b46-9ec8-a3d51a4135ef" />
+      <Name value="Documet.Get Linked Model (with Instance and Doc)" />
+      <Description value="Obtenir les fichiers de maquettes Revit et IFC liés au document courant. &#xD;&#xA;(from Archi-Lab Grimshaw)" />
+      <Inputs />
+      <Outputs>
+        <Output value="Link Instance" />
+        <Output value="Link Doc" />
+        <Output value="Link Name" />
+        <Output value="Link Path" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <DSRevitNodesUI.Categories guid="a14f173f-ca8b-49d2-9ce0-e40a6a504fc6" type="DSRevitNodesUI.Categories" nickname="Categories" x="-256.788773097298" y="240.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="357:Rooms" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="9bc70cb8-1e9e-4d4a-ad3c-cd97be7fc4cb" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Doc.CopyFromLinkInstance" x="1947.2112269027" y="97.5496527387342" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="1747bc42-6b08-4141-8861-99eb7bbf23cc" />
+      <Name value="Springs.Doc.CopyFromLinkInstance" />
+      <Description value="The node will use the total transformation of the link instance to copy the input elements into the local document." />
+      <Inputs>
+        <Input value="LinkInstance" />
+        <Input value="element" />
+      </Inputs>
+      <Outputs>
+        <Output value="local element" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <PythonNodeModels.PythonNode guid="d30c4690-c46e-41a0-b9e6-9f43101473a1" type="PythonNodeModels.PythonNode" nickname="Python Script" x="784.211226902702" y="146.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+import Autodesk
+
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.GeometryConversion)
+
+items = UnwrapElement(IN[0])
+elementlist = list()
+curvelist = list()
+
+for item in items:
+	doc = item.Document
+	calculator = SpatialElementGeometryCalculator(doc)
+	options = Autodesk.Revit.DB.SpatialElementBoundaryOptions()
+	# get boundary location from area computation settings
+	boundloc = Autodesk.Revit.DB.AreaVolumeSettings.GetAreaVolumeSettings(doc).GetSpatialElementBoundaryLocation(SpatialElementType.Room)
+	options.SpatialElementBoundaryLocation = boundloc
+	#method #1 - get boundary segments
+	#Revit 2017
+	blist = list()
+	clist = list()
+	try:
+		for boundarylist in item.GetBoundarySegments(options):
+			for boundary in boundarylist:
+				blist.append(doc.GetElement(boundary.ElementId))
+				clist.append(boundary.GetCurve().ToProtoType())
+	except:
+		pass
+	#method #1 - before Revit 2017	
+	try:
+		for boundarylist in item.GetBoundarySegments(options):
+			for boundary in boundarylist:
+				blist.append(boundary.Element)
+				clist.append(boundary.Curve.ToProtoType())
+	except:
+		pass	
+	#method #2 - spatial element geometry calculator
+	try:
+		results = calculator.CalculateSpatialElementGeometry(item)
+		for face in results.GetGeometry().Faces:
+			for bface in results.GetBoundaryFaceInfo(face):
+				blist.append(doc.GetElement(bface.SpatialBoundaryElement.HostElementId))
+	except:
+		pass	
+	# write results to list
+	elementlist.append(blist)
+	curvelist.append(clist)
+OUT = (elementlist,curvelist)</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="1616c277-e994-4c1d-9a0a-1208f0007f53" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="510.211226902702" y="146.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Flatten@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="b335bff8-70f8-4cf2-9d66-c7d29d12d692" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.Collector.LinkedInstanceElements" x="157.211226902702" y="146.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="True" />
+      <ID value="f9c65be3-fdc3-4f02-bbec-effc6056df12" />
+      <Name value="Springs.Collector.LinkedInstanceElements" />
+      <Description value="Extract elements by category from the selected linked instances. The transform CS can be used to get the exact location of the elements in the host file. If an error occurs or the linked document is unloaded, an error will be returned in the elements output and the appropriate transform will be a null. You can use those nulls to filter out the errors." />
+      <Inputs>
+        <Input value="linkInstance" />
+        <Input value="category" />
+        <Input value="refresh" />
+      </Inputs>
+      <Outputs>
+        <Output value="elements" />
+        <Output value="transform" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="b8b57a5d-70cc-41e9-ba24-7fa5eeee2e27" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="SketchPlane.ByPlane" x="1627.2112269027" y="257.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="true" assembly="RevitNodes.dll" function="Revit.Elements.SketchPlane.ByPlane@Autodesk.DesignScript.Geometry.Plane">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="fb9dca56-3ba6-4af9-ab62-e21df4aa75fd" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Curve.FromLine" x="1350.2112269027" y="149.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" useLevels="True" level="2" shouldKeepListStructure="False" />
+      <ID value="7b93b230-085a-4572-99eb-c2e49687019a" />
+      <Name value="Curve.FromLine" />
+      <Description value="This will translate a line element to a curve." />
+      <Inputs>
+        <Input value="line" />
+      </Inputs>
+      <Outputs>
+        <Output value="curve" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="d250e74b-e714-4a51-bab0-61e0f3e1aeb5" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="1627.2112269027" y="149.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="true" assembly="BuiltIn" function="Flatten@var[]..[]">
+      <PortInfo index="0" default="False" useLevels="True" level="3" shouldKeepListStructure="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="8bf8f1de-b0ba-425d-b00d-f32159615d67" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="1058.2112269027" y="150.762986072068" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="l[1];" ShouldFocus="false">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.CodeBlockNodeModel>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="f91db32a-9e6f-4ba9-a2c4-e00ba30f53c9" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Element.Level" x="1058.2112269027" y="260.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="23a94b80-4bd0-436f-a1b1-f77654b4428c" />
+      <Name value="Element.Level" />
+      <Description value="Gets an element's level" />
+      <Inputs>
+        <Input value="element" />
+      </Inputs>
+      <Outputs>
+        <Output value="level" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="0025b15d-037b-4dff-9b8f-4647ff46d98e" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Flatten" x="784.211226902702" y="260.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="BuiltIn" function="Flatten@var[]..[]">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="81aa75e2-6dbb-400d-a104-216471e36dd9" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Level.Plane" x="1350.2112269027" y="257.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="cbe6db5e-3248-46ff-87e4-b620a1abf252" />
+      <Name value="Level.Plane" />
+      <Description value="Retrieves the plane of a given level" />
+      <Inputs>
+        <Input value="level" />
+      </Inputs>
+      <Outputs>
+        <Output value="plane" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <DSRevitNodesUI.Views guid="154898a9-8eb2-4ab0-8521-380b34bfccda" type="DSRevitNodesUI.Views" nickname="Views" x="1627.2112269027" y="365.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="1:Level 1" />
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="9e6ce92e-9fab-4b18-a42e-abbeb5eeebc0" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="SpaceSeparator.FromCurve" x="1947.2112269027" y="231.549652738734" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="true">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <ID value="542e1898-3720-46de-bb65-3892df0cdece" />
+      <Name value="SpaceSeparator.FromCurve" />
+      <Description value="Creates space separation lines from geometry curves. " />
+      <Inputs>
+        <Input value="curve" />
+        <Input value="sketchPlane" />
+        <Input value="view" />
+      </Inputs>
+      <Outputs>
+        <Output value="spaceSeparator" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="e28cef50-3661-4861-a400-c1d2dff7581d" start_index="0" end="9bc70cb8-1e9e-4d4a-ad3c-cd97be7fc4cb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="e28cef50-3661-4861-a400-c1d2dff7581d" start_index="0" end="b335bff8-70f8-4cf2-9d66-c7d29d12d692" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a14f173f-ca8b-49d2-9ce0-e40a6a504fc6" start_index="0" end="b335bff8-70f8-4cf2-9d66-c7d29d12d692" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d30c4690-c46e-41a0-b9e6-9f43101473a1" start_index="0" end="8bf8f1de-b0ba-425d-b00d-f32159615d67" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="1616c277-e994-4c1d-9a0a-1208f0007f53" start_index="0" end="d30c4690-c46e-41a0-b9e6-9f43101473a1" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b335bff8-70f8-4cf2-9d66-c7d29d12d692" start_index="0" end="9bc70cb8-1e9e-4d4a-ad3c-cd97be7fc4cb" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b335bff8-70f8-4cf2-9d66-c7d29d12d692" start_index="0" end="1616c277-e994-4c1d-9a0a-1208f0007f53" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b335bff8-70f8-4cf2-9d66-c7d29d12d692" start_index="0" end="0025b15d-037b-4dff-9b8f-4647ff46d98e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="b8b57a5d-70cc-41e9-ba24-7fa5eeee2e27" start_index="0" end="9e6ce92e-9fab-4b18-a42e-abbeb5eeebc0" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="fb9dca56-3ba6-4af9-ab62-e21df4aa75fd" start_index="0" end="d250e74b-e714-4a51-bab0-61e0f3e1aeb5" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="d250e74b-e714-4a51-bab0-61e0f3e1aeb5" start_index="0" end="9e6ce92e-9fab-4b18-a42e-abbeb5eeebc0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8bf8f1de-b0ba-425d-b00d-f32159615d67" start_index="0" end="fb9dca56-3ba6-4af9-ab62-e21df4aa75fd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="f91db32a-9e6f-4ba9-a2c4-e00ba30f53c9" start_index="0" end="81aa75e2-6dbb-400d-a104-216471e36dd9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0025b15d-037b-4dff-9b8f-4647ff46d98e" start_index="0" end="f91db32a-9e6f-4ba9-a2c4-e00ba30f53c9" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="81aa75e2-6dbb-400d-a104-216471e36dd9" start_index="0" end="b8b57a5d-70cc-41e9-ba24-7fa5eeee2e27" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="154898a9-8eb2-4ab0-8521-380b34bfccda" start_index="0" end="9e6ce92e-9fab-4b18-a42e-abbeb5eeebc0" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="42696.22265625" eyeY="55227.87109375" eyeZ="67522.4609375" lookX="-41671.1796875" lookY="-55227.87109375" lookZ="-72730.6875" upX="-0.178157240152359" upY="0.93358039855957" upZ="-0.31094628572464" />
+  </Cameras>
+</Workspace>

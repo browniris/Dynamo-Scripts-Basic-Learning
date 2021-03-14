@@ -1,0 +1,87 @@
+<Workspace Version="1.2.1.3083" X="148.605827259816" Y="-118.742549091442" zoom="0.837801617107671" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="95a375e0-7279-4f3e-9470-9a3707bfa45d" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Springs.FamilyInstance.ByGeometry" x="887.959780387159" y="489.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <PortInfo index="3" default="True" />
+      <PortInfo index="4" default="True" />
+      <PortInfo index="5" default="True" />
+      <PortInfo index="6" default="True" />
+      <ID value="ecdb3729-0de2-4c50-bdca-28fe881027a2" />
+      <Name value="Springs.FamilyInstance.ByGeometry" />
+      <Description value="You must provide a valid family template path that will be used for all input geometry objects. The project units(and not the templates) will be used to determine the size of the output geometry.&#xD;&#xA;The provided category will be used only if the family template supports it. If not, the default template category will be used instead.&#xD;&#xA;Likewise, the family material(provided as a string) will be set only if a material with that name exists in the template. If not, the default material will be used instead (&quot;By Category&quot;).&#xD;&#xA;For void cuts, the material settings will be ignored.&#xD;&#xA;The Subcategory name is an optional input. If you'd like to skip assigning a Subcategory to any new instance, simply use null.&#xD;&#xA;The node expects a unique family name for each geometry object. The rest of the input lists will be processed as if the node lacing is set to longest." />
+      <Inputs>
+        <Input value="geometry" />
+        <Input value="familyTemplatePath" />
+        <Input value="familyName" />
+        <Input value="category" />
+        <Input value="materialName" />
+        <Input value="isVoid" />
+        <Input value="subcategoryName" />
+      </Inputs>
+      <Outputs>
+        <Output value="instance" />
+        <Output value="family" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Nodes.DSModelElementSelection guid="5069b070-d831-4d2a-a139-41bf7ea33e15" type="Dynamo.Nodes.DSModelElementSelection" nickname="Select Model Element" x="202.959780387159" y="562.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <instance id="fffe1ba4-c546-43e4-a94a-5f8315043a50-0004a6fd" />
+    </Dynamo.Nodes.DSModelElementSelection>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="151da136-722f-4763-a5ae-a74aec813f4c" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Element.Geometry" x="461.959780387159" y="562.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="RevitNodes.dll" function="Revit.Elements.Element.Geometry">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <CoreNodeModels.Input.Filename guid="0a3df5c4-facd-4187-bc81-09d8ebb23a39" type="CoreNodeModels.Input.Filename" nickname="File Path" x="461.959780387159" y="307.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.String>C:\ProgramData\Autodesk\RVT 2015\Family Templates\English\Metric Electrical Fixture.rft</System.String>
+      <HintPath>C:\ProgramData\Autodesk\RVT 2015\Family Templates\English\Metric Electrical Fixture.rft</HintPath>
+    </CoreNodeModels.Input.Filename>
+    <CoreNodeModels.Input.StringInput guid="a13f4ca3-b986-4476-8ffc-6c626ba9a1de" type="CoreNodeModels.Input.StringInput" nickname="String" x="461.959780387159" y="753.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.String>light</System.String>
+      <System.String value="light" />
+    </CoreNodeModels.Input.StringInput>
+    <DSRevitNodesUI.Categories guid="6c70d4b7-2361-46c2-a125-046e17703e96" type="DSRevitNodesUI.Categories" nickname="Categories" x="461.959780387159" y="414.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="214:LightingFixtures" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="c2b79899-ebdf-4bb2-8c90-9a3f48e75dd6" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Material.ByName" x="461.959780387159" y="836.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="RevitNodes.dll" function="Revit.Elements.Material.ByName@string">
+      <PortInfo index="0" default="False" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="70e30063-47bc-4b12-8472-ddd7aaa01b5e" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="202.959780387159" y="840.590695276983" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="&quot;Default&quot;;" ShouldFocus="false" />
+    <CoreNodeModels.Input.BoolSelector guid="0b79837a-ca85-4076-bbc2-b78d036d0168" type="CoreNodeModels.Input.BoolSelector" nickname="Boolean" x="461.959780387159" y="670.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Boolean>False</System.Boolean>
+    </CoreNodeModels.Input.BoolSelector>
+    <DSRevitNodesUI.Categories guid="8e565d9c-cb73-4fa1-85bd-3b9b75b86775" type="DSRevitNodesUI.Categories" nickname="Categories" x="461.959780387159" y="944.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false" index="155:ElectricalFixtures" />
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="edaf9537-b59c-4908-a5b7-370dab99657e" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="DirectShape.ByGeometry" x="887.959780387159" y="753.377361943649" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="true" assembly="RevitNodes.dll" function="Revit.Elements.DirectShape.ByGeometry@Autodesk.DesignScript.Geometry.Geometry,Revit.Elements.Category,Revit.Elements.Material,string">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="True" />
+      <PortInfo index="3" default="True" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="5069b070-d831-4d2a-a139-41bf7ea33e15" start_index="0" end="151da136-722f-4763-a5ae-a74aec813f4c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="151da136-722f-4763-a5ae-a74aec813f4c" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="151da136-722f-4763-a5ae-a74aec813f4c" start_index="0" end="edaf9537-b59c-4908-a5b7-370dab99657e" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0a3df5c4-facd-4187-bc81-09d8ebb23a39" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a13f4ca3-b986-4476-8ffc-6c626ba9a1de" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="a13f4ca3-b986-4476-8ffc-6c626ba9a1de" start_index="0" end="edaf9537-b59c-4908-a5b7-370dab99657e" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6c70d4b7-2361-46c2-a125-046e17703e96" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="3" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c2b79899-ebdf-4bb2-8c90-9a3f48e75dd6" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="4" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c2b79899-ebdf-4bb2-8c90-9a3f48e75dd6" start_index="0" end="edaf9537-b59c-4908-a5b7-370dab99657e" end_index="2" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="70e30063-47bc-4b12-8472-ddd7aaa01b5e" start_index="0" end="c2b79899-ebdf-4bb2-8c90-9a3f48e75dd6" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="0b79837a-ca85-4076-bbc2-b78d036d0168" start_index="0" end="95a375e0-7279-4f3e-9470-9a3707bfa45d" end_index="5" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8e565d9c-cb73-4fa1-85bd-3b9b75b86775" start_index="0" end="edaf9537-b59c-4908-a5b7-370dab99657e" end_index="1" portType="0" />
+  </Connectors>
+  <Notes>
+    <Dynamo.Graph.Notes.NoteModel guid="319b8073-96ef-4f96-905c-f801bd57fe02" text="Springs Node" x="461.959780387159" y="523.377361943649" />
+  </Notes>
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+  <SessionTraceData>
+    <NodeTraceData NodeId="edaf9537-b59c-4908-a5b7-370dab99657e">
+      <CallsiteTraceData CallSiteID="ByGeometry_InClassDecl-1_InFunctionScope-1_Instance0_edaf9537-b59c-4908-a5b7-370dab99657e">PFNPQVAtRU5WOkVudmVsb3BlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOlNPQVAtRU5DPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyIgeG1sbnM6U09BUC1FTlY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczpjbHI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc29hcC9lbmNvZGluZy9jbHIvMS4wIiBTT0FQLUVOVjplbmNvZGluZ1N0eWxlPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyI+DQo8U09BUC1FTlY6Qm9keT4NCjxhMTpDYWxsU2l0ZV94MDAyQl9UcmFjZVNlcmlhbGlzZXJIZWxwZXIgaWQ9InJlZi0xIiB4bWxuczphMT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9jbHIvbnNhc3NlbS9Qcm90b0NvcmUvUHJvdG9Db3JlJTJDJTIwVmVyc2lvbiUzRDEuMi4xLjMwODMlMkMlMjBDdWx0dXJlJTNEbmV1dHJhbCUyQyUyMFB1YmxpY0tleVRva2VuJTNEbnVsbCI+DQo8TnVtYmVyT2ZFbGVtZW50cz4xPC9OdW1iZXJPZkVsZW1lbnRzPg0KPEJhc2UtMF9IYXNEYXRhPmZhbHNlPC9CYXNlLTBfSGFzRGF0YT4NCjxCYXNlLTBfSGFzTmVzdGVkRGF0YT50cnVlPC9CYXNlLTBfSGFzTmVzdGVkRGF0YT4NCjxCYXNlLTBfTmVzdGVkRGF0YUNvdW50PjE8L0Jhc2UtMF9OZXN0ZWREYXRhQ291bnQ+DQo8QmFzZS0wLTBfSGFzRGF0YT50cnVlPC9CYXNlLTAtMF9IYXNEYXRhPg0KPEJhc2UtMC0wX0RhdGEgaWQ9InJlZi0zIj5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBFYVhKbFkzUlRhR0Z3WlZOMFlYUmxJR2xrUFNKeVpXWXRNU0lnZUcxc2JuTTZZVEU5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdlkyeHlMMjV6WVhOelpXMHZVbVYyYVhRdVJXeGxiV1Z1ZEhNdlVtVjJhWFJPYjJSbGN5VXlReVV5TUZabGNuTnBiMjRsTTBReExqSXVNUzR6TURnekpUSkRKVEl3UTNWc2RIVnlaU1V6Ukc1bGRYUnlZV3dsTWtNbE1qQlFkV0pzYVdOTFpYbFViMnRsYmlVelJHNTFiR3dpUGcwS1BITjBjbWx1WjBsRUlHbGtQU0p5WldZdE15SStabVptWlRGaVlUUXRZelUwTmkwME0yVTBMV0U1TkdFdE5XWTRNekUxTURRellUVXdMVEF3TURSaFl6YzRQQzl6ZEhKcGJtZEpSRDROQ2p4cGJuUkpSRDR6TURZeU9UWThMMmx1ZEVsRVBnMEtQSE41Ym1OSlpDQnBaRDBpY21WbUxUUWlQbVl3T0dZME5EY3lMV1ZoT0RrdE5HWTRaQzFpTVRZeExXTXdOamsxWmpNeFpUVm1PVHd2YzNsdVkwbGtQZzBLUEcxaGRHVnlhV0ZzU1dRK01qTThMMjFoZEdWeWFXRnNTV1ErRFFvOEwyRXhPa1JwY21WamRGTm9ZWEJsVTNSaGRHVStEUW84TDFOUFFWQXRSVTVXT2tKdlpIaytEUW84TDFOUFFWQXRSVTVXT2tWdWRtVnNiM0JsUGcwSzwvQmFzZS0wLTBfRGF0YT4NCjxCYXNlLTAtMF9IYXNOZXN0ZWREYXRhPmZhbHNlPC9CYXNlLTAtMF9IYXNOZXN0ZWREYXRhPg0KPC9hMTpDYWxsU2l0ZV94MDAyQl9UcmFjZVNlcmlhbGlzZXJIZWxwZXI+DQo8L1NPQVAtRU5WOkJvZHk+DQo8L1NPQVAtRU5WOkVudmVsb3BlPg0K</CallsiteTraceData>
+      <CallsiteTraceData CallSiteID="ByGeometry_InClassDecl-1_InFunctionScope-1_Instance0_edaf9537-b59c-4908-a5b7-370dab99657e">PFNPQVAtRU5WOkVudmVsb3BlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOlNPQVAtRU5DPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyIgeG1sbnM6U09BUC1FTlY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczpjbHI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc29hcC9lbmNvZGluZy9jbHIvMS4wIiBTT0FQLUVOVjplbmNvZGluZ1N0eWxlPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyI+DQo8U09BUC1FTlY6Qm9keT4NCjxhMTpDYWxsU2l0ZV94MDAyQl9UcmFjZVNlcmlhbGlzZXJIZWxwZXIgaWQ9InJlZi0xIiB4bWxuczphMT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9jbHIvbnNhc3NlbS9Qcm90b0NvcmUvUHJvdG9Db3JlJTJDJTIwVmVyc2lvbiUzRDEuMi4xLjMwODMlMkMlMjBDdWx0dXJlJTNEbmV1dHJhbCUyQyUyMFB1YmxpY0tleVRva2VuJTNEbnVsbCI+DQo8TnVtYmVyT2ZFbGVtZW50cz4xPC9OdW1iZXJPZkVsZW1lbnRzPg0KPEJhc2UtMF9IYXNEYXRhPmZhbHNlPC9CYXNlLTBfSGFzRGF0YT4NCjxCYXNlLTBfSGFzTmVzdGVkRGF0YT50cnVlPC9CYXNlLTBfSGFzTmVzdGVkRGF0YT4NCjxCYXNlLTBfTmVzdGVkRGF0YUNvdW50PjE8L0Jhc2UtMF9OZXN0ZWREYXRhQ291bnQ+DQo8QmFzZS0wLTBfSGFzRGF0YT50cnVlPC9CYXNlLTAtMF9IYXNEYXRhPg0KPEJhc2UtMC0wX0RhdGEgaWQ9InJlZi0zIj5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBFYVhKbFkzUlRhR0Z3WlZOMFlYUmxJR2xrUFNKeVpXWXRNU0lnZUcxc2JuTTZZVEU5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdlkyeHlMMjV6WVhOelpXMHZVbVYyYVhRdVJXeGxiV1Z1ZEhNdlVtVjJhWFJPYjJSbGN5VXlReVV5TUZabGNuTnBiMjRsTTBReExqSXVNUzR6TURnekpUSkRKVEl3UTNWc2RIVnlaU1V6Ukc1bGRYUnlZV3dsTWtNbE1qQlFkV0pzYVdOTFpYbFViMnRsYmlVelJHNTFiR3dpUGcwS1BITjBjbWx1WjBsRUlHbGtQU0p5WldZdE15SStabVptWlRGaVlUUXRZelUwTmkwME0yVTBMV0U1TkdFdE5XWTRNekUxTURRellUVXdMVEF3TURSaFl6YzRQQzl6ZEhKcGJtZEpSRDROQ2p4cGJuUkpSRDR6TURZeU9UWThMMmx1ZEVsRVBnMEtQSE41Ym1OSlpDQnBaRDBpY21WbUxUUWlQbVl3T0dZME5EY3lMV1ZoT0RrdE5HWTRaQzFpTVRZeExXTXdOamsxWmpNeFpUVm1PVHd2YzNsdVkwbGtQZzBLUEcxaGRHVnlhV0ZzU1dRK01qTThMMjFoZEdWeWFXRnNTV1ErRFFvOEwyRXhPa1JwY21WamRGTm9ZWEJsVTNSaGRHVStEUW84TDFOUFFWQXRSVTVXT2tKdlpIaytEUW84TDFOUFFWQXRSVTVXT2tWdWRtVnNiM0JsUGcwSzwvQmFzZS0wLTBfRGF0YT4NCjxCYXNlLTAtMF9IYXNOZXN0ZWREYXRhPmZhbHNlPC9CYXNlLTAtMF9IYXNOZXN0ZWREYXRhPg0KPC9hMTpDYWxsU2l0ZV94MDAyQl9UcmFjZVNlcmlhbGlzZXJIZWxwZXI+DQo8L1NPQVAtRU5WOkJvZHk+DQo8L1NPQVAtRU5WOkVudmVsb3BlPg0K</CallsiteTraceData>
+    </NodeTraceData>
+  </SessionTraceData>
+</Workspace>

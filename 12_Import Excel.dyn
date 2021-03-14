@@ -1,0 +1,33 @@
+<Workspace Version="1.2.1.3083" X="-2927.63219272953" Y="808.572115725571" zoom="0.635880042438551" Name="Home" Description="" RunType="Manual" RunPeriod="1000" HasRunWithoutCrash="False">
+  <NamespaceResolutionMap />
+  <Elements>
+    <Dynamo.Graph.Nodes.ZeroTouch.DSFunction guid="6f6b0a1b-873d-476c-ae08-cc4445fcc7ac" type="Dynamo.Graph.Nodes.ZeroTouch.DSFunction" nickname="Excel.ReadFromFile" x="5747.62282250554" y="-861.425635820367" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false" assembly="DSOffice.dll" function="DSOffice.Excel.ReadFromFile@var,string,bool">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="True" />
+    </Dynamo.Graph.Nodes.ZeroTouch.DSFunction>
+    <CoreNodeModels.Input.Filename guid="76dd8162-cb51-4437-873b-473c404ecd53" type="CoreNodeModels.Input.Filename" nickname="File Path" x="5170.62282250554" y="-942.425635820367" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.String>C:\Users\Z440\Desktop\dynamo\Exersice Programs\train.xlsx</System.String>
+      <HintPath>C:\Users\Z440\Desktop\dynamo\Exersice Programs\train.xlsx</HintPath>
+    </CoreNodeModels.Input.Filename>
+    <CoreNodeModels.Input.FileObject guid="dda689b7-28eb-4772-bd8c-d1b0ba8184c7" type="CoreNodeModels.Input.FileObject" nickname="File.FromPath" x="5516.62282250554" y="-942.425635820367" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+    </CoreNodeModels.Input.FileObject>
+    <Dynamo.Graph.Nodes.CodeBlockNodeModel guid="c4c65854-9e50-46f2-977a-61624d29a0fc" type="Dynamo.Graph.Nodes.CodeBlockNodeModel" nickname="Code Block" x="5516.62282250554" y="-834.212302487034" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" CodeText="&quot;Ex-1&quot;;" ShouldFocus="false" />
+    <CoreNodeModels.Input.BoolSelector guid="bb58f13b-43b3-4225-b718-508851ffbc7f" type="CoreNodeModels.Input.BoolSelector" nickname="Boolean" x="5516.62282250554" y="-725.425635820367" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Boolean>False</System.Boolean>
+    </CoreNodeModels.Input.BoolSelector>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="76dd8162-cb51-4437-873b-473c404ecd53" start_index="0" end="dda689b7-28eb-4772-bd8c-d1b0ba8184c7" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="dda689b7-28eb-4772-bd8c-d1b0ba8184c7" start_index="0" end="6f6b0a1b-873d-476c-ae08-cc4445fcc7ac" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c4c65854-9e50-46f2-977a-61624d29a0fc" start_index="0" end="6f6b0a1b-873d-476c-ae08-cc4445fcc7ac" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="bb58f13b-43b3-4225-b718-508851ffbc7f" start_index="0" end="6f6b0a1b-873d-476c-ae08-cc4445fcc7ac" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17.1303284472494" eyeY="1.38815754287121" eyeZ="50.6299208283722" lookX="12.1303284472494" lookY="9.61184245712879" lookZ="-58.6299208283722" upX="-0.0742552024203938" upY="0.930417567982025" upZ="0.358900145031903" />
+  </Cameras>
+</Workspace>
